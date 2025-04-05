@@ -1,27 +1,25 @@
 #include <iostream>
 
 #include "CPU.hpp"
+#include "Opcodes.hpp"
 
 using namespace std;
 
 int main() {
-	CPU cpu;
-	Mem memory;
+	CPU cpu("pacman.bin");
+	Mem memory; 
 
 	cpu.Reset(memory);
 
-	cpu.X = 5;
+    cpu.Execute(200000, memory);
 
-    memory[0xFFFC] = 0x20;
+	cout << "Accum: " << static_cast<int>(cpu.A) << endl;
+	cout << "X: " << static_cast<int>(cpu.X) << endl;
+	cout << "Y: " << static_cast<int>(cpu.Y) << endl;
+	cout << "SP: " << static_cast<int>(cpu.SP) << endl;
+	cout << "Carry: " << static_cast<int>(cpu.C) << endl;
+	cout << "Verb: " << static_cast<int>(cpu.V) << endl;
+	cout << "Zero: " << static_cast<int>(cpu.Z) << endl;
+	cout << "Negative: " << static_cast<int>(cpu.N) << endl;
 
-    memory[0xFFFD] = 0xF;
-    memory[0xFFFE] = 0xFF;
-
-    memory[65295] = 0xA9;
-    memory[65296] = 2;
-    memory[65297] = 0x60;
-
-    cpu.Execute(40, memory);
-
-	cout << static_cast<int>(cpu.A) << endl;
 }
