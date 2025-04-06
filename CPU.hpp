@@ -608,6 +608,24 @@ public:
 				--Cycles;
 			} break;
 
+			case IMP_BRK: {
+				Word Address = PC + 1;
+				memory.WriteWordToStack(Address, SP, Cycles, memory);
+				B = 1;
+				Byte Flags = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C;
+				memory[SP--] = Flags;
+				I = 1;
+				PC = Read_Word(Cycles, 0xFFFE, memory);
+				Cycles -= 3;
+			} break;
+
+			case IMP_RTI: {
+				++SP;
+				N = (memory[SP]) >> 7; V = (memory[SP]) >> 6; B = (memory[SP]) >> 4; D = (memory[SP]) >> 3; I = (memory[SP]) >> 2; Z = (memory[SP]) >> 1; C = (memory[SP] & 0b00000001);
+				PC = Pop_WordFromStack(Cycles, memory);
+				Cycles -= 3;
+			} break;
+
 			default:
 				switch (static_cast<int>(Ins)) {
 				case 0: {} break;

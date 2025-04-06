@@ -6,12 +6,12 @@
 using namespace std;
 
 int main() {
-	CPU cpu("pacman.bin");
+	CPU cpu("byte.bin");
 	Mem memory; 
 
 	cpu.Reset(memory);
 
-    cpu.Execute(200000, memory);
+    cpu.Execute(40, memory);
 
 	cout << "Accum: " << static_cast<int>(cpu.A) << endl;
 	cout << "X: " << static_cast<int>(cpu.X) << endl;
